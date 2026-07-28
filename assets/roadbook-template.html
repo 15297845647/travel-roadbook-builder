@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="{{TRIP_TITLE}}">
+  <title>{{TRIP_TITLE}}</title>
+  <style>
+    :root {
+      --ink: #18302b;
+      --muted: #63716c;
+      --paper: #f5f0e6;
+      --card: rgba(255,255,255,.88);
+      --accent: #d6603f;
+      --green: #335c4b;
+      --gold: #d4a243;
+      --line: rgba(24,48,43,.14);
+      --shadow: 0 18px 60px rgba(31,49,43,.12);
+      font-family: Inter, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; color: var(--ink); background: var(--paper); line-height: 1.65; }
+    img { display: block; width: 100%; height: auto; }
+    a { color: inherit; }
+    .progress { position: fixed; inset: 0 0 auto; height: 4px; z-index: 50; background: linear-gradient(90deg,var(--accent) var(--read,0%),transparent 0); }
+    .hero {
+      min-height: 78vh; display: grid; align-items: end; color: white; padding: clamp(24px,6vw,84px);
+      background: linear-gradient(180deg,rgba(12,24,22,.12),rgba(12,24,22,.78)), url("{{HERO_IMAGE}}") center/cover;
+    }
+    .hero-inner { max-width: 1050px; }
+    .eyebrow { letter-spacing: .16em; text-transform: uppercase; font-size: .78rem; }
+    h1 { max-width: 900px; font-size: clamp(2.6rem,7vw,6.5rem); line-height: .95; margin: .2em 0; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 10px; }
+    .pill { padding: 8px 13px; border: 1px solid rgba(255,255,255,.34); border-radius: 999px; backdrop-filter: blur(9px); }
+    nav { position: sticky; top: 0; z-index: 40; background: rgba(245,240,230,.9); backdrop-filter: blur(16px); border-bottom: 1px solid var(--line); }
+    nav .inner { display: flex; gap: 18px; overflow-x: auto; padding: 13px max(20px,calc((100vw - 1120px)/2)); white-space: nowrap; }
+    nav a { text-decoration: none; font-size: .92rem; }
+    main { width: min(1120px,calc(100% - 32px)); margin: auto; }
+    section { padding: 72px 0 24px; scroll-margin-top: 54px; }
+    h2 { font-size: clamp(1.9rem,4vw,3.4rem); margin: 0 0 22px; line-height: 1.1; }
+    h3 { margin: 0 0 8px; }
+    .lead { max-width: 720px; color: var(--muted); }
+    .grid { display: grid; grid-template-columns: repeat(12,1fr); gap: 18px; }
+    .card { grid-column: span 4; padding: 22px; border: 1px solid var(--line); border-radius: 22px; background: var(--card); box-shadow: var(--shadow); }
+    .wide { grid-column: span 12; }
+    .stat { font-size: 2rem; font-weight: 750; }
+    .muted { color: var(--muted); }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 20px; background: var(--card); }
+    table { width: 100%; border-collapse: collapse; min-width: 780px; }
+    th,td { padding: 14px 16px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { background: rgba(51,92,75,.08); }
+    details.day { border: 1px solid var(--line); border-radius: 24px; background: var(--card); margin: 16px 0; box-shadow: var(--shadow); overflow: hidden; }
+    details.day summary { cursor: pointer; list-style: none; padding: 22px 24px; display: flex; align-items: baseline; justify-content: space-between; gap: 20px; }
+    details.day summary::-webkit-details-marker { display: none; }
+    .day-body { padding: 0 24px 24px; display: grid; grid-template-columns: 1.3fr .7fr; gap: 24px; }
+    .timeline { border-left: 2px solid var(--gold); padding-left: 20px; }
+    .timeline p { margin: 0 0 16px; }
+    .callout { border-left: 4px solid var(--accent); padding: 14px 18px; background: rgba(214,96,63,.08); border-radius: 0 14px 14px 0; }
+    figure { margin: 0; border-radius: 20px; overflow: hidden; background: white; }
+    figure img { aspect-ratio: 16/10; object-fit: cover; }
+    figcaption { padding: 10px 14px; color: var(--muted); font-size: .82rem; }
+    .controls { display: flex; gap: 10px; margin: 0 0 16px; }
+    button { border: 0; border-radius: 999px; padding: 10px 16px; color: white; background: var(--green); cursor: pointer; }
+    footer { margin-top: 72px; padding: 48px max(20px,calc((100vw - 1120px)/2)); color: #e8eee9; background: var(--green); }
+    [data-reveal] { opacity: 0; transform: translateY(16px); transition: .55s ease; }
+    [data-reveal].visible { opacity: 1; transform: none; }
+    @media (max-width: 760px) {
+      .hero { min-height: 68vh; }
+      .card { grid-column: span 12; }
+      .day-body { grid-template-columns: 1fr; }
+      section { padding-top: 56px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      [data-reveal] { opacity: 1; transform: none; transition: none; }
+    }
+    @media print {
+      * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      @page { size: A4; margin: 12mm; }
+      body { background: white; font-size: 10pt; }
+      .hero { min-height: 250mm; break-after: page; }
+      nav,.progress,.screen-only { display: none !important; }
+      main { width: 100%; }
+      section { padding: 9mm 0 2mm; }
+      details.day { break-inside: avoid; }
+      details.day > * { display: block !important; }
+      .day-body { display: grid !important; }
+      .card,table,figure,.callout { break-inside: avoid; }
+      [data-reveal] { opacity: 1 !important; transform: none !important; }
+      a { color: inherit; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress" aria-hidden="true"></div>
+  <header class="hero">
+    <div class="hero-inner" data-reveal>
+      <div class="eyebrow">{{TRIP_DATES}} · {{DURATION}}</div>
+      <h1>{{TRIP_TITLE}}</h1>
+      <p>{{TRIP_SUBTITLE}}</p>
+      <div class="hero-meta">
+        <span class="pill">{{ROUTE_SUMMARY}}</span>
+        <span class="pill">{{TRANSPORT_SUMMARY}}</span>
+        <span class="pill" id="countdown" data-trip-start="{{START_ISO}}">计算出发倒计时…</span>
+      </div>
+    </div>
+  </header>
+
+  <nav aria-label="攻略目录">
+    <div class="inner">
+      <a href="#overview">总览</a><a href="#transport">交通</a><a href="#days">逐日</a>
+      <a href="#booking">预约</a><a href="#stay">住宿</a><a href="#food">美食</a>
+      <a href="#pack">行李</a><a href="#risk">风险</a><a href="#budget">预算</a><a href="#sources">来源</a>
+    </div>
+  </nav>
+
+  <main>
+    <section id="overview" data-reveal>
+      <div class="eyebrow">Route at a glance</div>
+      <h2>一眼看懂这趟旅行</h2>
+      <p class="lead">{{OVERVIEW_TEXT}}</p>
+      <div class="grid">
+        <article class="card"><div class="stat">{{TOTAL_DISTANCE}}</div><div class="muted">预计总里程</div></article>
+        <article class="card"><div class="stat">{{HOTEL_NIGHTS}}</div><div class="muted">住宿晚数</div></article>
+        <article class="card"><div class="stat">{{LONGEST_DAY}}</div><div class="muted">最长交通日</div></article>
+      </div>
+    </section>
+
+    <section id="transport" data-reveal>
+      <h2>城市之间，怎么走最舒服</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>区间</th><th>推荐方式</th><th>门到门时间</th><th>为何这样选</th><th>需确认</th></tr></thead>
+          <tbody>{{TRANSPORT_ROWS}}</tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="days">
+      <h2>逐日执行路书</h2>
+      <div class="controls screen-only">
+        <button type="button" data-open-days>展开全部</button>
+        <button type="button" data-close-days>收起全部</button>
+        <button type="button" onclick="window.print()">打印 / 存为 PDF</button>
+      </div>
+
+      <!-- Duplicate this details element once per day and keep data-day unique. -->
+      <details class="day" data-day="D1" open data-reveal>
+        <summary>
+          <strong>D1 · {{DAY1_DATE}} · {{DAY1_ROUTE}}</strong>
+          <span class="muted">{{DAY1_TIME_DISTANCE}}</span>
+        </summary>
+        <div class="day-body">
+          <div>
+            <div class="timeline">{{DAY1_TIMELINE}}</div>
+            <div class="callout"><strong>最晚节点：</strong>{{DAY1_CUTOFF}}</div>
+          </div>
+          <aside>
+            <h3>游玩方法</h3><p>{{DAY1_PLAY_METHOD}}</p>
+            <h3>吃住与预约</h3><p>{{DAY1_FOOD_STAY_BOOKING}}</p>
+            <h3>延误先舍去</h3><p>{{DAY1_SKIP_FIRST}}</p>
+          </aside>
+        </div>
+      </details>
+    </section>
+
+    <section id="booking" data-reveal><h2>预约日历</h2><div class="table-wrap"><table><tbody>{{BOOKING_TABLE}}</tbody></table></div></section>
+    <section id="stay" data-reveal><h2>住在哪里</h2><div class="grid">{{STAY_CARDS}}</div></section>
+    <section id="food" data-reveal><h2>按城市吃</h2><div class="grid">{{FOOD_CARDS}}</div></section>
+    <section id="pack" data-reveal><h2>带什么</h2><div class="grid">{{PACKING_CARDS}}</div></section>
+    <section id="risk" data-reveal><h2>天气、道路与 Plan B</h2><div class="grid">{{RISK_CARDS}}</div></section>
+    <section id="budget" data-reveal><h2>预算</h2><div class="table-wrap"><table><tbody>{{BUDGET_TABLE}}</tbody></table></div></section>
+    <section id="sources" data-reveal><h2>资料来源</h2><p class="muted">核验日期：{{SOURCE_CHECK_DATE}}</p>{{SOURCE_LIST}}</section>
+  </main>
+
+  <footer>{{FOOTER_NOTE}}</footer>
+  <noscript><style>[data-reveal]{opacity:1;transform:none}</style></noscript>
+  <script>
+    (() => {
+      const root = document.documentElement;
+      const updateProgress = () => {
+        const max = root.scrollHeight - innerHeight;
+        root.style.setProperty("--read", `${max > 0 ? Math.min(100, scrollY / max * 100) : 0}%`);
+      };
+      addEventListener("scroll", updateProgress, { passive: true });
+      updateProgress();
+
+      const startEl = document.querySelector("[data-trip-start]");
+      if (startEl) {
+        const start = new Date(startEl.dataset.tripStart);
+        const days = Math.ceil((start - new Date()) / 86400000);
+        startEl.textContent = Number.isFinite(days)
+          ? (days > 0 ? `距出发 ${days} 天` : days === 0 ? "今天出发" : "旅程已开始")
+          : "行程日期待确认";
+      }
+
+      document.querySelector("[data-open-days]")?.addEventListener("click", () =>
+        document.querySelectorAll("details.day").forEach(item => item.open = true));
+      document.querySelector("[data-close-days]")?.addEventListener("click", () =>
+        document.querySelectorAll("details.day").forEach(item => item.open = false));
+
+      const items = document.querySelectorAll("[data-reveal]");
+      if (!("IntersectionObserver" in window)) {
+        items.forEach(item => item.classList.add("visible"));
+      } else {
+        const observer = new IntersectionObserver(entries => entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        }), { threshold: .08 });
+        items.forEach(item => observer.observe(item));
+      }
+      addEventListener("beforeprint", () =>
+        document.querySelectorAll("details.day").forEach(item => item.open = true));
+    })();
+  </script>
+</body>
+</html>

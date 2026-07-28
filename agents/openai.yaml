@@ -1,0 +1,4 @@
+interface:
+  display_name: "旅游攻略路书生成器"
+  short_description: "生成经核验的详细行程、单文件网页、彩色PDF与预约清单"
+  default_prompt: "使用 $travel-roadbook-builder 为我的旅行规划路线，并生成可分享HTML与完整PDF攻略。"
