@@ -8,6 +8,15 @@
 
 > 效果图来自本 Skill 工作流生成的真实旅行攻略 PDF 首页。
 
+## 完整示例
+
+仓库提供一套由本 Skill 工作流生成的云南 8 天 7 晚完整成品，可用于查看信息深度、视觉设计和文件交付效果：
+
+- [可分享单文件 HTML](examples/yunnan-8d7n-roadbook.html)：实景图片已嵌入，不依赖发送者电脑上的本地路径
+- [完整彩色 PDF](examples/yunnan-8d7n-roadbook.pdf)：包含路线、逐日时间轴、预约、住宿、美食、装备和风险预案
+
+示例中的班次、票价、预约、住宿和道路信息具有时效性。规划新旅行时应重新核验，不要直接把示例数据当作当前事实。
+
 ## 能做什么
 
 - 比较自驾、高铁、飞机和包车的门到门时间、费用与疲劳程度
@@ -93,6 +102,9 @@ travel-roadbook-builder/
 │   └── roadbook-template.html
 ├── docs/
 │   └── preview.png
+├── examples/
+│   ├── yunnan-8d7n-roadbook.html
+│   └── yunnan-8d7n-roadbook.pdf
 ├── references/
 │   ├── deliverable-spec.md
 │   ├── intake-and-research.md
