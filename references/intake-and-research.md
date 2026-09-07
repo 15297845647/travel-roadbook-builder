@@ -11,13 +11,17 @@ Capture the trip as a compact contract:
 | Duration | Inclusive calendar days and hotel nights; calculate both independently |
 | Travelers | Adults, children, older adults, health limits, drivers, luggage |
 | Pace | Maximum comfortable drive, earliest start, latest arrival, one or two bases preferred |
-| Priorities | Must-see, nice-to-have, and explicitly droppable places |
+| Priorities | Must-see places, must-drive scenic roads, nice-to-have, and explicitly droppable places |
 | Budget | Per-room hotel band, transport preference, total target or flexibility |
 | Interests | Landscape, food, culture, photography, hiking, family, art, nightlife |
 | Constraints | Dietary, mobility, altitude, motion sickness, visa/permit, rental eligibility |
-| Deliverables | Chat, HTML, single-file HTML, PDF, spreadsheet, or combination |
+| Deliverables | Unselected, roadbook with navigation links, roadbook plus PDF and links, links only, or an explicit custom combination |
 
 Resolve “8 days 7 nights” as eight dated day entries and seven sleep entries. A post-midnight arrival may create a hotel night even when sightseeing begins later; state the convention used.
+
+Treat a stated artifact request as the user's product selection, not as approval of a still-incomplete route. When all material itinerary facts are accepted and no product is selected, offer the four delivery choices in `SKILL.md`; do not turn this into another request to approve the same itinerary.
+
+Keep rejected proposals in the record. A later revision should not silently revive an option the user already rejected. Distinguish a scenic road from an ordinary transfer: “I need this drive” is a must-have experience even if its endpoints are unchanged.
 
 ## Evidence hierarchy
 
@@ -82,6 +86,13 @@ Start with current navigation distance and time, then add:
 
 Label the result “realistic elapsed time,” not “pure wheel time.” If the user compares a 440 km route with a 680 km route, explicitly show which waypoints, detours, or wrong endpoints create the difference.
 
+For a scenic-drive attraction, publish both:
+
+- route-only wheel time;
+- full experience time with viewpoints, walks, meals, fuel, and buffer.
+
+Record whether there is one driver or two. Do not use two-driver endurance as the default when driver count is unknown.
+
 ## Route scoring
 
 Score candidate routes from 1–5:
@@ -96,6 +107,8 @@ Score candidate routes from 1–5:
 - flexibility.
 
 Give the recommended route and explain the largest compromise. Offer a relaxed version and a disruption fallback. Preserve the user's stated must-see places unless removal is required for safety or schedule feasibility.
+
+Include “experience value” in the score. A slower road that the user explicitly wants can outrank a faster expressway; optimize the surrounding stops rather than erasing the core experience.
 
 ## Rental-car specification
 

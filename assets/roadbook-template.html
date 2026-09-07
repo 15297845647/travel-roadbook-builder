@@ -1,9 +1,10 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-roadbook-revision="{{ROADBOOK_REVISION}}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="{{TRIP_TITLE}}">
+  <meta name="roadbook-revision" content="{{ROADBOOK_REVISION}}">
   <title>{{TRIP_TITLE}}</title>
   <style>
     :root {
@@ -102,14 +103,14 @@
       <div class="hero-meta">
         <span class="pill">{{ROUTE_SUMMARY}}</span>
         <span class="pill">{{TRANSPORT_SUMMARY}}</span>
-        <span class="pill" id="countdown" data-trip-start="{{START_ISO}}">计算出发倒计时…</span>
+        <span class="pill" id="countdown" data-trip-start="{{START_ISO}}" data-trip-timezone="{{TRIP_TIMEZONE}}">计算出发倒计时…</span>
       </div>
     </div>
   </header>
 
   <nav aria-label="攻略目录">
     <div class="inner">
-      <a href="#overview">总览</a><a href="#transport">交通</a><a href="#days">逐日</a>
+      <a href="#overview">总览</a><a href="#calendar">总表</a><a href="#map">地图</a><a href="#transport">交通</a><a href="#days">逐日</a>
       <a href="#booking">预约</a><a href="#stay">住宿</a><a href="#food">美食</a>
       <a href="#pack">行李</a><a href="#risk">风险</a><a href="#budget">预算</a><a href="#sources">来源</a>
     </div>
@@ -125,6 +126,21 @@
         <article class="card"><div class="stat">{{HOTEL_NIGHTS}}</div><div class="muted">住宿晚数</div></article>
         <article class="card"><div class="stat">{{LONGEST_DAY}}</div><div class="muted">最长交通日</div></article>
       </div>
+    </section>
+
+    <section id="calendar" data-reveal>
+      <h2>总行程表</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>日 / 日期</th><th>住宿</th><th>交通</th><th>路线</th><th>里程 / 时间</th><th>核心安排</th><th>预约</th></tr></thead>
+          <tbody>{{MASTER_ROUTE_ROWS}}</tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="map" data-reveal>
+      <h2>路线地图与导航</h2>
+      {{MAP_CONTENT}}
     </section>
 
     <section id="transport" data-reveal>
@@ -146,7 +162,7 @@
       </div>
 
       <!-- Duplicate this details element once per day and keep data-day unique. -->
-      <details class="day" data-day="D1" open data-reveal>
+      <details class="day" data-day="D1" data-sleep="{{DAY1_SLEEP}}" open data-reveal>
         <summary>
           <strong>D1 · {{DAY1_DATE}} · {{DAY1_ROUTE}}</strong>
           <span class="muted">{{DAY1_TIME_DISTANCE}}</span>
@@ -188,11 +204,32 @@
 
       const startEl = document.querySelector("[data-trip-start]");
       if (startEl) {
-        const start = new Date(startEl.dataset.tripStart);
-        const days = Math.ceil((start - new Date()) / 86400000);
-        startEl.textContent = Number.isFinite(days)
-          ? (days > 0 ? `距出发 ${days} 天` : days === 0 ? "今天出发" : "旅程已开始")
-          : "行程日期待确认";
+        const timezone = startEl.dataset.tripTimezone;
+        const dayParts = date => Object.fromEntries(
+          new Intl.DateTimeFormat("en-CA", {
+            timeZone: timezone,
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+          }).formatToParts(date)
+            .filter(part => part.type !== "literal")
+            .map(part => [part.type, part.value]),
+        );
+        try {
+          const dateOnly = /^(\d{4})-(\d{2})-(\d{2})(?:T.*)?$/.exec(startEl.dataset.tripStart);
+          const tripDay = dateOnly
+            ? { year: dateOnly[1], month: dateOnly[2], day: dateOnly[3] }
+            : dayParts(new Date(startEl.dataset.tripStart));
+          const today = dayParts(new Date());
+          const tripUtc = Date.UTC(tripDay.year, Number(tripDay.month) - 1, tripDay.day);
+          const todayUtc = Date.UTC(today.year, Number(today.month) - 1, today.day);
+          const days = Math.round((tripUtc - todayUtc) / 86400000);
+          startEl.textContent = Number.isFinite(days)
+            ? (days > 0 ? `距出发 ${days} 天` : days === 0 ? "今天出发" : "旅程已开始")
+            : "行程日期待确认";
+        } catch {
+          startEl.textContent = "行程日期待确认";
+        }
       }
 
       document.querySelector("[data-open-days]")?.addEventListener("click", () =>

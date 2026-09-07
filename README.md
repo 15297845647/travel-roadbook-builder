@@ -1,6 +1,6 @@
 # Travel Roadbook Builder
 
-一个面向 Codex 的旅游攻略 Skill：先核验路线和交通，再生成可以真正执行、可以分享、可以打印的完整旅行路书。
+一个面向 Codex 的旅游攻略 Skill：先核验并确认路线和交通，再按选择生成可以真正执行、可以分享、可以打印的旅行路书。
 
 它适合自驾、高铁、飞机或混合交通旅行，能够处理逐日行程、景点游玩方法、预约日历、租车取还、住宿餐饮、安全提醒、单文件 HTML 和完整彩色 PDF。
 
@@ -20,6 +20,11 @@
 ## 能做什么
 
 - 比较自驾、高铁、飞机和包车的门到门时间、费用与疲劳程度
+- 区分“规划 → 已确认 → 生成”三个状态；只有行程事实一致并获确认后才制作最终文件
+- 在确认行程后明确提供“路书+链接、路书+PDF+链接、仅链接、继续修改”四种交付选择
+- 持续记录固定日期、必去体验、驾驶上限和已经否决的方案，避免多轮修改后漂移
+- 区分普通转场与“公路本身就是景点”的景观自驾，不会为缩短时间擅自删掉核心体验
+- 解释两份路线里程或驾驶时间为何不同，统一起终点、途经点和计时口径后再修改
 - 明确每座城市采用什么交通方式
 - 规划租车城市、门店区域、取还车日期以及异地还车核验
 - 生成日期、住宿晚数、车票和预约相互一致的逐日行程
@@ -28,7 +33,7 @@
 - 推荐住宿区域、具体酒店、餐厅、招牌菜和备选店铺
 - 补充天气、高原、山路、夜间驾驶、行李与安全提醒
 - 生成响应式动画 HTML、可分享单文件 HTML 和完整彩色 PDF
-- 自动检查重复 ID、丢失图片、未嵌入资源、错误天数和残留旧路线
+- 自动检查重复 ID、丢失图片、未嵌入资源、错误天数/晚数和 HTML/PDF 残留旧路线
 
 ## 安装
 
@@ -60,6 +65,8 @@ cp -R travel-roadbook-builder ~/.codex/skills/
 6. 保留完整背景和图片的彩色 PDF
 ```
 
+上例已指定期望产物，因此不会在确认后重复询问交付形式；但 Skill 仍会先补齐会影响路线的事实，并等待你确认完整行程后再生成文件。
+
 也可以要求它修改已有攻略：
 
 ```text
@@ -75,11 +82,12 @@ flowchart LR
     A[确认日期与偏好] --> B[核验实时资料]
     B --> C[比较交通与路线]
     C --> D[锁定逐日主表]
-    D --> E[补充预约住宿美食]
-    E --> F[生成动画 HTML]
-    F --> G[嵌入图片成为单文件]
-    G --> H[导出并逐页检查 PDF]
-    H --> I[一致性校验与交付]
+    D --> E[按景点补齐预约住宿美食]
+    E --> F[确认完整行程]
+    F --> G[选择路书/PDF/链接]
+    G --> H[生成所选产物]
+    H --> I[嵌入图片、导出并逐页检查 PDF]
+    I --> J[一致性校验与交付]
 ```
 
 资料优先级：
@@ -108,17 +116,38 @@ travel-roadbook-builder/
 ├── references/
 │   ├── deliverable-spec.md
 │   ├── intake-and-research.md
+│   ├── maps-and-transport.md
+│   ├── plan-data-model.md
+│   ├── provenance.md
+│   ├── revision-and-route-audit.md
 │   └── quality-checklist.md
-└── scripts/
-    ├── embed_html_images.py
-    └── validate_roadbook.py
+├── scripts/
+│   ├── build_route_links.py
+│   ├── embed_html_images.py
+│   └── validate_roadbook.py
+└── tests/
+    └── test_*.py
 ```
 
 ## 工具脚本
 
+### 生成导航交接链接
+
+在没有实时地图路由工具时，可生成用于打开地图 App/网页的交接链接。它不会查询路况、计算里程或提供实时 ETA：
+
+```bash
+python3 scripts/build_route_links.py \
+  --region china \
+  --city 上海 \
+  --mode transit \
+  --stops 人民广场 "上海博物馆东馆" 武康路
+```
+
+中国大陆路线按相邻停靠点生成百度导航链接，并为每个停靠点提供高德搜索；国际路线生成 Google Maps 链接。最终链接只从用户已确认的时间表生成。
+
 ### 嵌入本地图片
 
-把 HTML 中的本地图片转换为 Base64，生成可以直接发给别人的单文件版本：
+把 HTML 中的本地图片和 CSS 背景图转换为 Base64，生成可以直接发给别人的单文件版本：
 
 ```bash
 python3 scripts/embed_html_images.py \
@@ -126,7 +155,7 @@ python3 scripts/embed_html_images.py \
   shareable.html
 ```
 
-远程链接仍会保留，但分享版不应再依赖本机图片路径。
+远程链接仍会保留，但分享版不应再依赖本机图片路径。本地资源默认必须位于源 HTML 所在目录内；使用 `--base-dir` 时，该目录就是明确的可信资源根目录，脚本会拒绝 `../`、目录外绝对路径和越界符号链接。
 
 ### 校验攻略
 
@@ -136,8 +165,11 @@ python3 scripts/validate_roadbook.py \
   --bundle shareable.html \
   --pdf guide.pdf \
   --expected-days 8 \
+  --expected-nights 7 \
+  --expected-revision "YOUR-REVISION-ID" \
   --must-contain "德钦" \
-  --forbid "已取消目的地"
+  --forbid "已取消目的地" \
+  --strict-pdf-text
 ```
 
 校验内容包括：
@@ -145,16 +177,21 @@ python3 scripts/validate_roadbook.py \
 - 重复 HTML ID
 - 无效页内链接
 - 未替换的模板占位符
-- 丢失或未嵌入的图片
-- `data-day` 天数错误
-- 必须存在或禁止残留的文本
-- PDF 是否能打开、是否加密以及基础文本检查
+- 丢失或未嵌入的普通图片、Hero 图和 CSS 背景资源
+- `data-day` 天数、顺序和 `data-sleep` 住宿晚数错误
+- 源 HTML 与分享版 revision 不一致
+- HTML、分享版和 PDF 中必须存在或禁止残留的文本
+- PDF 是否能打开、是否加密以及严格文本回归检查
 
 PDF 最终仍需逐页渲染为图片，检查背景、字体、表格、分页和裁切。
+
+上面的 revision、关键词和文件名是调用示例，请替换成当前路书的真实值。
 
 ## 设计原则
 
 - 不编造班次、票价、预约规则、道路开放状态或异地还车费用
+- 不因追求最短车程擅自删除用户明确要求的景观公路或体验
+- 不使用不同起终点、途经点或计时口径比较驾驶里程
 - 不用单纯导航时间掩盖真实驾驶疲劳
 - 不让视觉效果遮住高反、山路、天气和误机风险
 - 不把小红书等社区内容当作安全规则的唯一来源
