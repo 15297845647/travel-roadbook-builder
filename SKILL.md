@@ -1,15 +1,39 @@
 ---
 name: travel-roadbook-builder
-description: Create research-backed, executable travel roadbooks with route and transport optimization, exact rental pickup and return planning, day-by-day itineraries, booking calendars, hotels, restaurants, safety notes, sources, a shareable single-file HTML, and a rendered and verified color PDF. Use when Codex is asked to plan or revise a multi-day trip, self-drive/high-speed-rail/flight itinerary, detailed travel guide, animated travel webpage, printable PDF roadbook, attraction reservation guide, or destination route comparison.
+description: Use when Codex plans or revises a single-day or multi-day trip, compares routes or transport, handles self-drive, rail, or flight logistics, prepares reservations, or creates a travel roadbook, shareable HTML, navigation links, or PDF.
 ---
 
 # Travel Roadbook Builder
 
-Create a trip that can actually be booked and followed. Optimize the route before decorating it, verify unstable facts, then deliver both a rich shareable webpage and a print-ready full-color PDF when requested.
+Create a trip that can actually be booked and followed. Resolve and confirm the itinerary before making final files; optimize the route before decorating it, and verify unstable facts before presenting them as reliable.
 
 ## Required workflow
 
-### 1. Establish the trip contract
+### 1. Choose the planning and delivery state
+
+Use the lightest planning depth that keeps the result safe:
+
+| Mode | Appropriate scope | Minimum result |
+|---|---|---|
+| Quick mode | One day, a short city visit, a route sketch, or chat-only advice | Compact contract, ordered stops, time blocks, cut-off, and fallback |
+| Roadbook mode | Multiple days or cities, self-drive, fixed departures, reservations, lodging, or generated files | Structured plan, transport decision, dated calendar, detailed days, and applicable booking modules |
+
+Planning depth and final-file selection are separate. Move through these states in order:
+
+1. **Planning** — resolve the contract, evidence, route, schedule, and material dependencies.
+2. **Ready** — all material facts and choices are internally consistent and the user has accepted the itinerary.
+3. **Generating** — create only the final artifacts the user selected.
+
+When the plan is Ready and the user has not selected artifacts, say plainly that the itinerary is confirmed and offer these choices in the user's language:
+
+1. shareable single-file roadbook with complete navigation links (recommended);
+2. roadbook, PDF, and navigation links;
+3. navigation links only;
+4. continue revising without generating files.
+
+Do not imply that final files already exist before this choice. When the user explicitly requested an artifact set, that request selects the product only: it never removes the need to settle material facts or obtain itinerary acceptance. Once facts are accepted, enter Generating without repeating the product-choice question. Build final links only from the accepted timetable, never an earlier draft.
+
+### 2. Establish the trip contract
 
 Read `references/intake-and-research.md`.
 
@@ -22,11 +46,21 @@ Extract or ask only for decisions that materially change the route:
 - maximum comfortable driving time and tolerance for early starts;
 - hotel and total budget bands;
 - food restrictions and special interests;
-- desired output: chat plan, HTML, PDF, or all.
+- desired output, if already known: chat plan, shareable roadbook with links, roadbook plus PDF and links, or links only.
 
 Infer low-risk preferences from the conversation. Do not repeat questions the user has already answered. State any assumption that changes transport, nights, or cost.
 
-### 2. Research current facts
+Maintain a compact constraint ledger throughout the thread:
+
+- fixed anchors: arrival, departure, calendar days, hotel nights, and booked tickets;
+- must-haves, including scenic roads and experiences rather than only named attractions;
+- preferences and comfort ceilings;
+- explicitly rejected or replaced options;
+- pending facts that still require verification.
+
+Treat the latest message as a change to this ledger, not permission to forget earlier accepted constraints. After a major revision, restate the resulting nights, must-haves, rental segment, and longest day before rebuilding artifacts.
+
+### 3. Research current facts
 
 Browse the internet for all time-sensitive travel facts. Prefer sources in this order:
 
@@ -37,6 +71,8 @@ Browse the internet for all time-sensitive travel facts. Prefer sources in this 
 
 Use social posts to find practical details and candidate businesses, not as the sole authority for ticket rules, road openings, safety restrictions, or schedules. Record source URLs and the date checked. Clearly label estimates and facts that remain unconfirmed.
 
+For every planned attraction, including free viewpoints and road stops, assign one booking state: confirmed rule, sales not open, monitor, optional/no ticket, or pending verification. Do not omit a stop merely because it may not require a ticket.
+
 Verify at least:
 
 - opening hours, closed days, reservation method, release window, entry documents, shuttle rules, and refund rules;
@@ -46,9 +82,21 @@ Verify at least:
 - hotel operating status, parking, heating or air conditioning, altitude, and room-view conditions;
 - restaurant operating status, meal periods, reservation needs, and branch identity.
 
-### 3. Optimize transport before the itinerary
+### 4. Optimize transport before the itinerary
+
+Read `references/maps-and-transport.md`. Use the highest available live or authoritative transport capability, and label estimates and map-opening links honestly.
 
 Build a city-by-city transport matrix. Compare rail, flight, private transfer, local taxi, and self-drive by door-to-door time, cost, flexibility, parking burden, fatigue, and disruption risk.
+
+Classify every intercity road segment before optimizing it:
+
+- utility transfer;
+- scenic-drive attraction;
+- access road to a major attraction;
+- urban segment where a car is a burden;
+- protected departure leg.
+
+If the user values a scenic road, treat the road and its viewpoints as a must-see attraction. Do not silently replace it with a faster expressway or delete it merely to shorten the day. First remove duplicative city sightseeing, low-value detours, or optional stops; if the remaining day is still unsafe, surface the conflict and offer a specific sacrifice.
 
 For self-drive, state:
 
@@ -67,7 +115,11 @@ Do not disguise an overloaded day by quoting only navigation time. Flag any day 
 
 Protect the final departure with an explicit buffer. Avoid same-day long mountain drives into a fixed flight or train unless the risk is surfaced and accepted.
 
-### 4. Lock the calendar and consistency model
+When the user questions a distance or drive time, normalize both routes before answering: exact start/end points, waypoints, road class, detours, pure wheel time, stops, and realistic elapsed time. Show which difference creates the delta. Do not defend an old number or rewrite the artifact until the discrepancy is understood.
+
+### 5. Lock the calendar and consistency model
+
+For Roadbook mode, for generated roadbooks, and for revisions with cross-day dependencies, read `references/plan-data-model.md`. Keep one structured plan as the authoritative record. The displayed master table, day cards, booking calendar, navigation links, HTML, and PDF must be derived from it rather than maintained as competing calendars.
 
 Create one source-of-truth table with:
 
@@ -90,9 +142,9 @@ Make all later sections derive from this table. Enforce:
 - pickup precedes driving and return follows the last drive;
 - the departure ticket has enough transfer and check-in buffer.
 
-When the user revises a route, search the whole deliverable for stale cities, distances, dates, ticket notes, hotel counts, and map labels before finalizing.
+When the user revises a route, read `references/revision-and-route-audit.md`. Recompute the master table first, then propagate the change through every summary, route diagram, day card, booking item, hotel, food, budget, image, source, PDF cover, and footer. Search for stale cities, distances, dates, ticket notes, hotel counts, map labels, and rejected wording before finalizing.
 
-### 5. Write an executable day-by-day plan
+### 6. Write an executable day-by-day plan
 
 For each day, provide:
 
@@ -108,7 +160,16 @@ For each day, provide:
 
 Do not list attractions without explaining how to visit them. Distinguish photo stops from full visits.
 
-### 6. Add booking, lodging, food, packing, and risk modules
+For any long scenic-drive day, separate:
+
+- route-only wheel time;
+- planned attraction and photo-stop time;
+- meals, refueling, parking, and recovery buffer;
+- total realistic elapsed time;
+- driver load for one driver versus two;
+- the exact time or condition that triggers the faster fallback.
+
+### 7. Add booking, lodging, food, packing, and risk modules
 
 Read `references/deliverable-spec.md` and include all applicable modules.
 
@@ -120,7 +181,7 @@ Recommend food by city and meal occasion. Verify the correct branch, operating s
 
 Include compact packing and safety checklists tailored to season, altitude, road type, children or older adults, and transport mode.
 
-### 7. Build the rich HTML
+### 8. Build the rich HTML
 
 Copy `assets/roadbook-template.html` as a structural starting point when an HTML deliverable is requested. Replace every `{{PLACEHOLDER}}`; duplicate the example day card as needed and remove sample instructions.
 
@@ -144,11 +205,13 @@ For a file the user will send to others, produce a single-file version with loca
 python3 scripts/embed_html_images.py SOURCE.html SHAREABLE.html
 ```
 
-Keep remote links clickable, but do not depend on local relative image paths, local fonts, or local scripts in the shareable file.
+Keep remote links clickable, but do not depend on local relative image paths, CSS background-image files, local fonts, or local scripts in the shareable file. Prefer semantic `<img>` elements for hero photography so the bundler and accessibility checks can see them.
 
-### 8. Produce the full-color PDF
+### 9. Produce the full-color PDF
 
 When a PDF is requested, use the available PDF skill or a browser print engine. Preserve the complete guide rather than creating a reduced text-only version.
+
+Generate PDF narrative, metrics, and day data from the same source model or HTML. Avoid manually duplicating route facts in a second generator. If hardcoded cover or footer text is unavoidable, add its distinctive old wording to the validator's forbidden-token regression list after every revision.
 
 Before export:
 
@@ -161,7 +224,7 @@ Before export:
 
 Render every PDF page to images and inspect them. Fix clipping, blank pages, missing backgrounds, tiny text, broken CJK fonts, orphan headings, and hidden collapsed content before delivery.
 
-### 9. Validate and hand off
+### 10. Validate and hand off
 
 Read `references/quality-checklist.md`.
 
@@ -173,35 +236,50 @@ python3 scripts/validate_roadbook.py \
   --bundle SHAREABLE.html \
   --pdf GUIDE.pdf \
   --expected-days 8 \
-  --must-contain "关键目的地"
+  --expected-nights 7 \
+  --expected-revision "YOUR-REVISION-ID" \
+  --must-contain "关键目的地" \
+  --forbid "已删除的旧路线措辞" \
+  --strict-pdf-text
 ```
 
-Also compile or parse inline JavaScript with an available JS runtime. Treat warnings as work to resolve or disclose, not as decoration.
+Use a revision token in both source and bundled HTML when practical, and pass `--expected-revision`. Also compile or parse inline JavaScript with an available JS runtime. Treat warnings as work to resolve or disclose, not as decoration.
 
-Deliver:
+Deliver only the selected artifacts:
 
-- the editable/source HTML;
-- the shareable single-file HTML;
-- the verified color PDF;
+- the editable/source HTML when requested;
+- the shareable single-file HTML when requested;
+- the verified color PDF when requested;
+- complete route-navigation links when selected, one per consecutive accepted route leg unless a leg-specific limitation is stated;
 - a brief list of assumptions and facts that must be reconfirmed near departure;
 - the source-check date.
 
-Save user-facing artifacts in the designated output directory. Copy to Desktop only when the user asks and permission permits it.
+Verify that every selected file exists before handoff and provide clickable file links. Save user-facing artifacts in the designated output directory. Copy to Desktop only when the user asks and permission permits it.
 
 ## Non-negotiable rules
 
 - Never invent a timetable, ticket rule, road opening, hotel amenity, restaurant status, or one-way rental fee.
 - Never claim “no reservation needed” without a current source or clear qualification.
+- Never drop or downgrade a declared must-have, including a scenic road, without naming the conflict and obtaining an explicit tradeoff.
+- Never compare route distances that use different endpoints or waypoints without showing the normalization.
 - Never let visual polish conceal route fatigue, altitude risk, or a missed-departure risk.
 - Never use an image without a usable source, license basis, or explicit user ownership.
 - Never deliver a “single-file” HTML that still depends on local file paths.
 - Never finalize a PDF without rendering and visually checking all pages.
+- Never patch only the visible day card; propagate every accepted revision across HTML, bundled HTML, PDF, and their manually duplicated summaries.
+- Never generate final artifacts before material itinerary facts are resolved and the user accepts the plan.
+- Never create final navigation links from a superseded timetable.
 
 ## Resource map
 
 - `references/intake-and-research.md`: intake, evidence, route, and transport decisions.
+- `references/maps-and-transport.md`: routing capability ladder, navigation-link fallback, exact leg reconciliation, and privacy boundary.
+- `references/revision-and-route-audit.md`: constraint ledger, scenic-road decisions, route discrepancy analysis, and revision propagation.
+- `references/plan-data-model.md`: structured source-of-truth plan and consistency invariants.
 - `references/deliverable-spec.md`: required content and HTML/PDF presentation contract.
 - `references/quality-checklist.md`: final consistency and file validation checklist.
+- `references/provenance.md`: rules for adding third-party materials and recording their provenance.
 - `assets/roadbook-template.html`: reusable responsive, animated, print-aware skeleton.
 - `scripts/embed_html_images.py`: embed local image files into a shareable HTML.
+- `scripts/build_route_links.py`: generate provider handoff links without claiming live routing or traffic data.
 - `scripts/validate_roadbook.py`: detect duplicate IDs, missing images, unbundled assets, day-count errors, forbidden stale text, and basic PDF faults.

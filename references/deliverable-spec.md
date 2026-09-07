@@ -1,13 +1,64 @@
 # Deliverable specification
 
+## Delivery states
+
+Use the planning response to settle the itinerary. When all material choices are accepted, move to Ready and offer the final artifact choices defined in `SKILL.md`. Do not generate files merely because the plan is complete, and do not close the conversation without the offer.
+
+When the Ready-state user selects an artifact set, generate it in the same turn when tools and runtime allow. A request that already names the desired artifacts counts as that selection and must not trigger a redundant artifact-choice question; it does not bypass material-fact resolution or itinerary acceptance.
+
+## Quick mode
+
+Return, in this order:
+
+1. a one-glance trip contract and any assumptions;
+2. the ordered route, with draft map links only when they help the current decision;
+3. a chronological table with an explicit travel block between locations;
+4. opening, reservation, and last-entry constraints;
+5. the cut-off, first optional item to remove, and one fallback;
+6. source links and the check date for volatile facts.
+
+Do not include the lodging, packing, budget, HTML, or PDF modules unless they matter to the request.
+
+After the user accepts the Quick plan, offer the same final artifact choices as Roadbook mode. Generate and validate the complete navigation-link set only after the plan is Ready. If the user requests links during Planning, provide only clearly labeled draft links for sufficiently defined legs; this does not create a final artifact or bypass the Ready gate.
+
+## Final artifact choices
+
+Offer these choices when the plan becomes Ready and the user has not already chosen:
+
+| Choice | Final output |
+|---|---|
+| Shareable roadbook (recommended) | Structured plan data, shareable single-file HTML, and complete navigation links inside the roadbook |
+| Roadbook plus PDF | The shareable roadbook package plus a print-ready PDF |
+| Navigation links only | One ordered link per route leg, with mode and endpoint labels |
+| Continue revising | No final artifact yet; return to Planning |
+
+Name the files that were created and provide clickable links at handoff. If a selected artifact cannot be created, say which artifact failed and why; do not replace it silently with prose.
+
 ## Master route table
 
 Place one compact source-of-truth table near the top:
 
-| Day/date | Sleep | Transport | Route | Distance/time | Core visit | Booking |
+| Day/date | Sleep | Transport/segment role | Route | Distance/wheel/elapsed | Core visit | Booking |
 |---|---|---|---|---|---|---|
 
 Use realistic elapsed time. Mark long or weather-sensitive days. Keep the same values in route cards, detailed days, budget, and PDF.
+
+Give scenic-drive attractions their own core-visit label rather than hiding them inside “transport.”
+
+When navigation links are selected, make one link for every consecutive accepted travel leg. Its origin, destination, mode, and label must agree with the final master table. A link is a navigation handoff, not proof of traffic, distance, or duration.
+
+## Map and navigation
+
+Include a map/navigation section after the route overview:
+
+- identify whether each duration came from a live query, a verified source, or an estimate;
+- provide one ordered route or a numbered link per leg;
+- place each link beside its matching travel block and keep its exact origin, destination, and mode in sync;
+- keep every stop visible when a provider cannot encode multi-stop routes;
+- disambiguate branches and similarly named places;
+- warn before exposing private anchors in shareable links.
+
+Do not label a URL formatter as route optimization or live navigation.
 
 ## Day-card content
 
@@ -26,6 +77,8 @@ Each day card must contain:
 
 Explain “what to play” at each attraction. Examples: viewing platform order, lakeside segment, village loop, museum floor sequence, cable-car combination, sunrise position, or old-town walking direction.
 
+For a scenic road, include navigation waypoints, safe stopping rules, photo-stop versus full-visit durations, expressway fallback, and the cutoff that activates it.
+
 ## Booking table
 
 Use:
@@ -34,6 +87,8 @@ Use:
 |---|---|---|---|---|---|---|---|
 
 Status values: confirmed, sales not open, monitor, optional, or pending verification.
+
+Include one row for every planned attraction or scenic-road stop. For a free/open viewpoint, use `optional/no ticket` only when supported; otherwise use `pending verification`. Never let an omitted row imply that no action is required.
 
 ## Hotel recommendations
 
@@ -110,6 +165,8 @@ Required sections:
 - budget;
 - sources and check date.
 
+Add `data-roadbook-revision` to the document and `data-day` plus `data-sleep` to each dated day card. Keep the revision value identical in source and bundled HTML.
+
 Recommended interaction:
 
 - sticky navigation;
@@ -132,7 +189,7 @@ Use:
 - openly licensed or public-domain images;
 - generated decorative visuals when clearly appropriate.
 
-Provide descriptive alt text, caption, creator/source, and license link when required. Do not hotlink brittle image URLs in a shareable artifact. Download permitted images locally, then embed them in the single-file edition.
+Provide descriptive alt text, caption, creator/source, and license link when required. Do not hotlink brittle image URLs in a shareable artifact. Download permitted images locally, then embed them in the single-file edition. Embed hero and CSS background images too, not only ordinary `<img>` tags. After a route revision, verify that each image still depicts the correct place or is clearly labeled as representative.
 
 ## Print and PDF contract
 
@@ -160,3 +217,5 @@ Use CSS similar to:
 ```
 
 Do not trust the first export. Render and inspect every page.
+
+Derive PDF facts from the same master model or HTML. If a generator contains manually written cover metrics, footer summaries, or day-image mappings, include them in the revision audit and stale-token search.
