@@ -62,12 +62,14 @@ Treat the latest message as a change to this ledger, not permission to forget ea
 
 ### 3. Research current facts
 
-Browse the internet for all time-sensitive travel facts. Prefer sources in this order:
+Browse the internet for all time-sensitive travel facts. For food and travel recommendations, default to combining recent first-hand Xiaohongshu content with authoritative checks. Read `references/xiaohongshu-travel-and-food.md` for capability discovery, searches, evidence grading, and destination-specific research. Prefer sources in this order:
 
-1. official attraction, government, transport, railway, airline, and rental-car sources;
-2. official hotel or restaurant pages and current map listings;
-3. established booking platforms;
-4. recent first-hand notes such as Xiaohongshu, Mafengwo, or travel blogs for lived experience only.
+1. official and real-time information: government, attraction/operator, transport, weather, railway, airline, rental-car, hotel, and restaurant sources;
+2. current maps/navigation for branch identity, location, route, and live traffic;
+3. recent first-hand Xiaohongshu notes and substantive comments for lived experience;
+4. other guides, traveler reports, and established booking platforms as supplementary discovery sources.
+
+Apply this hierarchy by claim: live booking inventory and exact transaction terms come from the operator or booking system, never from social popularity. Closures, weather, and opening rules require official/current evidence. If Xiaohongshu access is unavailable, disclose the limitation and use the reference's fallback; never imply unread notes or comments were verified.
 
 Use social posts to find practical details and candidate businesses, not as the sole authority for ticket rules, road openings, safety restrictions, or schedules. Record source URLs and the date checked. Clearly label estimates and facts that remain unconfirmed.
 
@@ -152,7 +154,7 @@ For each day, provide:
 - a time-blocked schedule from wake-up or arrival through hotel check-in;
 - exact visit order and what to see at each stop;
 - recommended entrance, parking lot, shuttle, walking direction, and exit;
-- meal area and named current restaurant candidates;
+- meals with one named primary restaurant and 1–2 nearby alternatives, recommended dishes, evidence-based reasons, relation to the day’s route, and applicable parking/queue/reservation notes; label unresolved details and evidence gaps rather than inventing shops;
 - latest safe departure time and a clear cut-off rule;
 - hotel area plus two or three property candidates;
 - reservations, weather triggers, driving cautions, and Plan B;
@@ -177,7 +179,7 @@ Create a booking calendar with “when to act,” exact channel, identity docume
 
 Recommend lodging by area first, then property. Explain tradeoffs such as walking convenience, parking, early departure, view, heating, oxygen, noise, and price volatility.
 
-Recommend food by city and meal occasion. Verify the correct branch, operating status, signature dishes, queue pattern, parking, and reservation need. Give alternatives instead of presenting one shop as guaranteed.
+Recommend food by city and meal occasion using `references/xiaohongshu-travel-and-food.md`. Prioritize recent independent notes, meaningful comments, repeated mentions, and saves over raw popularity; screen obvious marketing and fit the accepted route and diet. Verify the correct branch, operating status, signature dishes, queue pattern, parking, and reservation need. Give one primary choice plus 1–2 alternatives per planned restaurant meal, with confidence and source links; never present a candidate as booked or guaranteed.
 
 Include compact packing and safety checklists tailored to season, altitude, road type, children or older adults, and transport mode.
 
@@ -273,6 +275,7 @@ Verify that every selected file exists before handoff and provide clickable file
 ## Resource map
 
 - `references/intake-and-research.md`: intake, evidence, route, and transport decisions.
+- `references/xiaohongshu-travel-and-food.md`: default Xiaohongshu search/detail capability routing, food/attraction/driving queries, confidence grading, daily meals, and weather-aware experience research.
 - `references/maps-and-transport.md`: routing capability ladder, navigation-link fallback, exact leg reconciliation, and privacy boundary.
 - `references/revision-and-route-audit.md`: constraint ledger, scenic-road decisions, route discrepancy analysis, and revision propagation.
 - `references/plan-data-model.md`: structured source-of-truth plan and consistency invariants.

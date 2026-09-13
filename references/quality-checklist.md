@@ -50,8 +50,8 @@
 - [ ] Hotel area logic is explained.
 - [ ] Named hotels are current and have one disclosed tradeoff.
 - [ ] View, parking, heating, oxygen, and breakfast claims are not exaggerated.
-- [ ] Named restaurants use the correct branch and current operating evidence.
-- [ ] Every key meal has a backup.
+- [ ] Named restaurants use the correct branch and current operating evidence, or disclose a non-critical verification gap; no unresolved sole food-supply dependency is treated as ready.
+- [ ] Every key restaurant meal has a backup, or an explicit evidence shortage that does not leave a critical food-supply dependency unresolved.
 - [ ] Dietary and altitude-related food cautions are included when relevant.
 
 ## Sources and media
@@ -98,3 +98,19 @@
 - [ ] Final facts-to-reconfirm list is concise and actionable.
 - [ ] Assumptions are disclosed.
 - [ ] Files are in the requested output location.
+
+## Xiaohongshu travel and food review
+
+These are semantic review checks; the existing HTML/PDF validator does not verify live sources or these evidence fields.
+
+- [ ] Food/travel research attempted available Xiaohongshu search/detail capabilities, or explicitly disclosed the access gap and fallback.
+- [ ] Full notes/comments and search snippets are distinguished; no invented popularity, source URLs, dates, or read claims.
+- [ ] Primary experience recommendations use independent cross-checks; marketing, duplicates, stale posts, and material contradictions affect confidence.
+- [ ] Each restaurant meal has a concrete branch, dishes, reasons, route fit, and 1–2 alternatives, or an explicit shortage of evidence; hotel/packed/onboard meals are identified.
+- [ ] Parking, queues, reservation and opening details are sourced or pending; waiting and detours fit the schedule and diet.
+- [ ] Attractions cover visit method, pitfalls, photo spots, timing, parking, and recent experience where relevant.
+- [ ] Self-drive covers recent experience, road surface, scenery, safe parking, fuel, sedan suitability, and darkness; official restrictions prevail.
+- [ ] Research covers the actual planned destinations and experiences without imposing a fixed regional list; weather-dependent experiences have current checks and a fallback.
+- [ ] Weather outside forecast range remains pending with a recheck date; old sunshine photos do not establish a forecast.
+- [ ] Experience confidence is separate from verified operating facts, with source links and check dates retained in the master plan and relevant outputs.
+- [ ] Meal revisions propagate through travel blocks, alternatives, navigation, budgets, HTML and PDF without changing accepted anchors or artifact-selection gates.

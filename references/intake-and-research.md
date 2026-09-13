@@ -27,11 +27,12 @@ Keep rejected proposals in the record. A later revision should not silently revi
 
 For facts that can change, use:
 
-1. official government or operator pages;
-2. official ticketing accounts or booking systems;
-3. current map and transport platforms;
-4. established booking platforms;
-5. recent traveler reports for on-the-ground nuance.
+1. official/real-time government, operator, weather, ticketing, or booking-system evidence for the specific claim;
+2. current maps/navigation and transport platforms;
+3. recent first-hand Xiaohongshu notes and comments for experience;
+4. other guides, traveler reports, and booking-platform discovery content.
+
+Use current booking systems for actual availability and transaction terms even when their editorial guides rank lower. Social experience never overrides official restrictions.
 
 Cross-check surprising facts with a second source. Examples include “free one-way rental,” seasonal road access, no-reservation claims, free scenic shuttles, and unusually short drive times.
 
@@ -48,7 +49,7 @@ Do not overquote sources. Paraphrase and link.
 
 ## Practical use of Xiaohongshu and community sources
 
-Use recent posts to discover:
+For food and travel recommendations, actively search Xiaohongshu by default using `xiaohongshu-travel-and-food.md`; follow its access fallback and record any missing coverage. Use recent posts to discover:
 
 - real queue and parking patterns;
 - best visit direction and photography time;

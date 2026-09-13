@@ -66,3 +66,15 @@ Add optional fields for transport alternatives, fixed departures, rental events,
 ## Revision rule
 
 Change the relevant plan object first, recompute affected downstream blocks, then regenerate every dependent representation. A Markdown table, a link list, or an HTML day card is never the source of truth.
+
+## Food and experience evidence extension
+
+For days with restaurant recommendations, add `meals` to the existing day object. Each meal records `occasion`, `primary`, `alternatives` (1–2 when evidence allows), and any `coverage_gap`. A hotel breakfast, packed meal, or onboard meal may instead record its explicit `meal_type`; do not invent a restaurant to fill a slot.
+
+Each restaurant candidate records name, branch, map query/location, recommended dishes, recommendation reason, route fit (preceding/following stop and walking/detour time with basis), opening status, parking, queue/cut-off, reservation, dietary fit, experience confidence, and source IDs. Unknown values are marked pending rather than guessed. Alternatives are choices, not extra scheduled stops; only the selected meal affects travel blocks and navigation.
+
+Extend the existing `sources` entries for social experience with a stable ID, platform, note URL/ID, author when visible, publication/update date, reported visit date when available, checked date, topic/place/branch, extracted claim, visible save/comment counts (or unknown), comment observations, marketing/duplication flags, access depth (full note/comments, note only, or snippet), independence group, and experience confidence. Keep publication time distinct from visit time. Never infer unpublished counts or dates. Follow `xiaohongshu-travel-and-food.md` for grading.
+
+Keep factual `status` (confirmed/estimated/pending) separate from experience confidence (high/medium/low). Conflicting evidence retains both source IDs and a resolution or pending action. Route revisions recompute meal fit, backups, timings, sources, and every dependent output from this same plan.
+
+For road restrictions and weather claims, extend their existing source entries with `published_at`, `location_or_segment`, `effective_from`, `effective_until` (unknown when unpublished), `forecast_coverage` where relevant, `checked_at`, `recheck_on`, and a reference to the affected day/route and fallback. Keep these source-specific fields in the same plan; never infer a reopening date from a missing end date.

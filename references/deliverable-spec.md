@@ -68,7 +68,7 @@ Each day card must contain:
 2. a chronological timeline;
 3. exactly how to visit each place;
 4. entrances, parking, shuttles, walks, and exit strategy;
-5. meal area and named restaurant candidates;
+5. each restaurant meal’s named primary choice plus 1–2 alternatives, dishes, reasons, route fit, and relevant parking/queue/reservation notes (or explicit evidence/access gaps);
 6. hotel zone and property candidates;
 7. tickets and action deadlines;
 8. weather, altitude, road, and fatigue warnings;
@@ -111,14 +111,17 @@ Avoid claiming a room guarantees sunrise, mountain, or lake views unless the exa
 Organize by city and meal:
 
 - local dishes to try;
-- two or three named current shops;
+- one named primary shop plus 1–2 alternatives per restaurant meal, chosen using `xiaohongshu-travel-and-food.md`;
 - correct branch and map search term;
 - signature order for party size;
 - meal-period opening status;
 - queue/reservation pattern;
 - parking or walking access;
 - price band and dietary warnings;
-- backup nearby.
+- backup nearby;
+- why this shop: recent independent experience, substantive comments, marketing caveats, and evidence confidence;
+- relation to the preceding/following stop, walking or detour time with its basis, and a queue cut-off that protects the day;
+- source links and check date, with unavailable Xiaohongshu details disclosed.
 
 Clearly distinguish a researched candidate from a booked or guaranteed venue.
 
