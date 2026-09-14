@@ -1,4 +1,4 @@
 interface:
   display_name: "旅游攻略路书生成器"
-  short_description: "先确认可执行行程，再生成路书、导航链接与可选彩色 PDF"
-  default_prompt: "使用 $travel-roadbook-builder 记录我的固定约束与必去体验，先核验并确认行程；确认后引导我选择路书和导航链接、路书加PDF和链接、仅链接，或继续修改。若我已指定产物，只跳过重复选择。"
+  short_description: "先确认可执行行程，再生成路书与可选彩色 PDF"
+  default_prompt: "使用 $travel-roadbook-builder 记录我的固定约束与必去体验，先核验并确认行程；确认后引导我选择路书、路书加PDF，或继续修改。若我已指定产物，只跳过重复选择。"

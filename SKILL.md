@@ -1,6 +1,6 @@
 ---
 name: travel-roadbook-builder
-description: Use when Codex plans or revises a single-day or multi-day trip, compares routes or transport, handles self-drive, rail, or flight logistics, prepares reservations, or creates a travel roadbook, shareable HTML, navigation links, or PDF.
+description: Use when Codex plans or revises a single-day or multi-day trip, compares routes or transport, handles self-drive, rail, or flight logistics, prepares reservations, or creates a travel roadbook, shareable HTML, or PDF.
 ---
 
 # Travel Roadbook Builder
@@ -26,12 +26,11 @@ Planning depth and final-file selection are separate. Move through these states 
 
 When the plan is Ready and the user has not selected artifacts, say plainly that the itinerary is confirmed and offer these choices in the user's language:
 
-1. shareable single-file roadbook with complete navigation links (recommended);
-2. roadbook, PDF, and navigation links;
-3. navigation links only;
-4. continue revising without generating files.
+1. shareable single-file roadbook (recommended);
+2. roadbook and PDF;
+3. continue revising without generating files.
 
-Do not imply that final files already exist before this choice. When the user explicitly requested an artifact set, that request selects the product only: it never removes the need to settle material facts or obtain itinerary acceptance. Once facts are accepted, enter Generating without repeating the product-choice question. Build final links only from the accepted timetable, never an earlier draft.
+Do not imply that final files already exist before this choice. When the user explicitly requested an artifact set, that request selects the product only: it never removes the need to settle material facts or obtain itinerary acceptance. Once facts are accepted, enter Generating without repeating the product-choice question.
 
 ### 2. Establish the trip contract
 
@@ -46,7 +45,7 @@ Extract or ask only for decisions that materially change the route:
 - maximum comfortable driving time and tolerance for early starts;
 - hotel and total budget bands;
 - food restrictions and special interests;
-- desired output, if already known: chat plan, shareable roadbook with links, roadbook plus PDF and links, or links only.
+- desired output, if already known: chat plan, shareable roadbook or roadbook plus PDF.
 
 Infer low-risk preferences from the conversation. Do not repeat questions the user has already answered. State any assumption that changes transport, nights, or cost.
 
@@ -123,7 +122,7 @@ When the user questions a distance or drive time, normalize both routes before a
 
 ### 5. Lock the calendar and consistency model
 
-For Roadbook mode, for generated roadbooks, and for revisions with cross-day dependencies, read `references/plan-data-model.md`. Keep one structured plan as the authoritative record. The displayed master table, day cards, booking calendar, navigation links, HTML, and PDF must be derived from it rather than maintained as competing calendars.
+For Roadbook mode, for generated roadbooks, and for revisions with cross-day dependencies, read `references/plan-data-model.md`. Keep one structured plan as the authoritative record. The displayed master table, day cards, booking calendar, route descriptions, HTML, and PDF must be derived from it rather than maintained as competing calendars.
 
 Create one source-of-truth table with:
 
@@ -254,7 +253,6 @@ Deliver only the selected artifacts:
 - the editable/source HTML when requested;
 - the shareable single-file HTML when requested;
 - the verified color PDF when requested;
-- complete route-navigation links when selected, one per consecutive accepted route leg unless a leg-specific limitation is stated;
 - a brief list of assumptions and facts that must be reconfirmed near departure;
 - the source-check date.
 
@@ -272,21 +270,16 @@ Verify that every selected file exists before handoff and provide clickable file
 - Never finalize a PDF without rendering and visually checking all pages.
 - Never patch only the visible day card; propagate every accepted revision across HTML, bundled HTML, PDF, and their manually duplicated summaries.
 - Never generate final artifacts before material itinerary facts are resolved and the user accepts the plan.
-- Never create final navigation links from a superseded timetable.
 
-## Route maps and platform import
+## Delivery scope
 
-For complete route maps, Amap/Baidu support or import requests, read `references/navigation-and-import.md`. Deliver the full-trip visual, accepted per-day sequence, supported platform files/links, and an import/use guide inside every selected roadbook format. Distinguish schematic connections, road geometry, link handoff, visualization import and account-saved navigation. Verify platform support rather than claiming generic GPX/KML or spreadsheet compatibility. Keep all existing itinerary, health, research and artifact-selection constraints.
-
-For a requested whole-trip, day-grouped import, require one provider-native collection and one receiving/save flow with D1–Dn groups preserved; follow the whole-trip acceptance checks in that reference. A list of leg links or separate daily imports is not equivalent. Respect user-directed phone testing and any prohibition on phone mirroring.
+This skill delivers travel plans, roadbooks and optional PDFs. It does not generate navigation URLs, platform route-share links, import files or map-account collections. Do not require map-account login or phone mirroring for these deliverables. Continue using available map information to verify locations, route order, distances and travel times.
 
 ## Resource map
 
-- `references/navigation-and-import.md`: complete route maps, Amap/Baidu capabilities, import evidence, coordinate semantics, embedded instructions and validation.
-- `scripts/navigation_export.py`: validate sourced WGS84 geometry and export explicitly classified KML without calculating roads or uploading.
 - `references/intake-and-research.md`: intake, evidence, route, and transport decisions.
 - `references/xiaohongshu-travel-and-food.md`: default Xiaohongshu search/detail capability routing, food/attraction/driving queries, confidence grading, daily meals, and weather-aware experience research.
-- `references/maps-and-transport.md`: routing capability ladder, navigation-link fallback, exact leg reconciliation, and privacy boundary.
+- `references/maps-and-transport.md`: routing capability ladder, transport estimates, and exact leg reconciliation.
 - `references/revision-and-route-audit.md`: constraint ledger, scenic-road decisions, route discrepancy analysis, and revision propagation.
 - `references/plan-data-model.md`: structured source-of-truth plan and consistency invariants.
 - `references/deliverable-spec.md`: required content and HTML/PDF presentation contract.
@@ -294,5 +287,4 @@ For a requested whole-trip, day-grouped import, require one provider-native coll
 - `references/provenance.md`: rules for adding third-party materials and recording their provenance.
 - `assets/roadbook-template.html`: reusable responsive, animated, print-aware skeleton.
 - `scripts/embed_html_images.py`: embed local image files into a shareable HTML.
-- `scripts/build_route_links.py`: generate provider handoff links without claiming live routing or traffic data.
 - `scripts/validate_roadbook.py`: detect duplicate IDs, missing images, unbundled assets, day-count errors, forbidden stale text, and basic PDF faults.

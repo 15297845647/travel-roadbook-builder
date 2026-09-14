@@ -11,7 +11,7 @@ When the Ready-state user selects an artifact set, generate it in the same turn 
 Return, in this order:
 
 1. a one-glance trip contract and any assumptions;
-2. the ordered route, with draft map links only when they help the current decision;
+2. the ordered route, with named stops and transport modes;
 3. a chronological table with an explicit travel block between locations;
 4. opening, reservation, and last-entry constraints;
 5. the cut-off, first optional item to remove, and one fallback;
@@ -19,7 +19,7 @@ Return, in this order:
 
 Do not include the lodging, packing, budget, HTML, or PDF modules unless they matter to the request.
 
-After the user accepts the Quick plan, offer the same final artifact choices as Roadbook mode. Generate and validate the complete navigation-link set only after the plan is Ready. If the user requests links during Planning, provide only clearly labeled draft links for sufficiently defined legs; this does not create a final artifact or bypass the Ready gate.
+After the user accepts the Quick plan, offer the same final artifact choices as Roadbook mode. Generate selected artifacts only after the plan is Ready.
 
 ## Final artifact choices
 
@@ -27,9 +27,8 @@ Offer these choices when the plan becomes Ready and the user has not already cho
 
 | Choice | Final output |
 |---|---|
-| Shareable roadbook (recommended) | Structured plan data, shareable single-file HTML, and complete navigation links inside the roadbook |
+| Shareable roadbook (recommended) | Structured plan data and shareable single-file HTML |
 | Roadbook plus PDF | The shareable roadbook package plus a print-ready PDF |
-| Navigation links only | One ordered link per route leg, with mode and endpoint labels |
 | Continue revising | No final artifact yet; return to Planning |
 
 Name the files that were created and provide clickable links at handoff. If a selected artifact cannot be created, say which artifact failed and why; do not replace it silently with prose.
@@ -45,20 +44,9 @@ Use realistic elapsed time. Mark long or weather-sensitive days. Keep the same v
 
 Give scenic-drive attractions their own core-visit label rather than hiding them inside “transport.”
 
-When navigation links are selected, make one link for every consecutive accepted travel leg. Its origin, destination, mode, and label must agree with the final master table. A link is a navigation handoff, not proof of traffic, distance, or duration.
+## Route overview
 
-## Map and navigation
-
-Include a map/navigation section after the route overview:
-
-- identify whether each duration came from a live query, a verified source, or an estimate;
-- provide one ordered route or a numbered link per leg;
-- place each link beside its matching travel block and keep its exact origin, destination, and mode in sync;
-- keep every stop visible when a provider cannot encode multi-stop routes;
-- disambiguate branches and similarly named places;
-- warn before exposing private anchors in shareable links.
-
-Do not label a URL formatter as route optimization or live navigation.
+After the route overview, show each day's ordered places and transport modes. Identify whether distances and durations come from live queries, verified sources or estimates. Resolve similarly named places and branches. Maps or diagrams may illustrate the accepted route, but schematic lines must not be described as verified roads.
 
 ## Day-card content
 
@@ -222,7 +210,3 @@ Use CSS similar to:
 Do not trust the first export. Render and inspect every page.
 
 Derive PDF facts from the same master model or HTML. If a generator contains manually written cover metrics, footer summaries, or day-image mappings, include them in the revision audit and stale-token search.
-
-## Requested map/import module
-
-When the user requests maps or Amap/Baidu imports, include the complete trip diagram, day-level waypoint order, available import artifacts, and platform-specific instructions from `navigation-and-import.md` in every selected HTML/PDF format. Name exact files and distinguish visualization-only import from navigation/account sync. Do not claim unsupported platforms are interchangeable.

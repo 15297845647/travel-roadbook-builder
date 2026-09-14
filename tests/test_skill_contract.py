@@ -67,7 +67,6 @@ class SkillContractTests(unittest.TestCase):
         self.assertIn("## Delivery states", text)
         self.assertIn("## Final artifact choices", text)
         self.assertIn("does not bypass material-fact resolution or itinerary acceptance", text)
-        self.assertIn("clearly labeled draft links", text)
         self.assertIn("Do not generate files merely because the plan is complete", text)
 
     def test_artifact_generation_requires_an_accepted_itinerary(self) -> None:

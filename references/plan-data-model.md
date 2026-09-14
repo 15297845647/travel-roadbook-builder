@@ -51,7 +51,7 @@ Use one structured plan for Roadbook mode, generated roadbooks, and any revision
 }
 ```
 
-Add optional fields for transport alternatives, fixed departures, rental events, bookings, lodging, budget, navigation links, and media credits. Keep them within this one plan rather than creating a second calendar.
+Add optional fields for transport alternatives, fixed departures, rental events, bookings, lodging, budget, route descriptions, and media credits. Keep them within this one plan rather than creating a second calendar.
 
 ## Invariants
 
@@ -61,7 +61,6 @@ Add optional fields for transport alternatives, fixed departures, rental events,
 - Each travel block states whether its duration is `live`, `verified`, or `estimated`.
 - Each volatile material claim records a URL, check date, applicable trip date, and status (`confirmed`, `estimated`, or `pending`).
 - Rental pickup is before the first rental drive; return is after the last one. Fixed departures include transfer and check-in buffer.
-- A final navigation link, if selected, names the same ordered origin, destination, and transport mode as its corresponding accepted travel block.
 
 ## Revision rule
 

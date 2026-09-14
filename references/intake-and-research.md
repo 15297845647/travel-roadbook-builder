@@ -15,7 +15,7 @@ Capture the trip as a compact contract:
 | Budget | Per-room hotel band, transport preference, total target or flexibility |
 | Interests | Landscape, food, culture, photography, hiking, family, art, nightlife |
 | Constraints | Dietary, mobility, altitude, motion sickness, visa/permit, rental eligibility |
-| Deliverables | Unselected, roadbook with navigation links, roadbook plus PDF and links, links only, or an explicit custom combination |
+| Deliverables | Unselected, shareable roadbook, roadbook plus PDF, or an explicit custom combination |
 
 Resolve “8 days 7 nights” as eight dated day entries and seven sleep entries. A post-midnight arrival may create a hotel night even when sightseeing begins later; state the convention used.
 

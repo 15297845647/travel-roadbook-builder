@@ -5,9 +5,8 @@
 - [ ] Quick or Roadbook mode matches the trip complexity.
 - [ ] Planning resolves every material fact, conflict, and dependency before final-file generation.
 - [ ] The itinerary is internally consistent and accepted before it enters Ready.
-- [ ] With no selected product, Ready offers roadbook with links, roadbook plus PDF and links, links only, or continued revision.
+- [ ] With no selected product, Ready offers a shareable roadbook, roadbook plus PDF, or continued revision.
 - [ ] An explicit artifact request skips only that product-choice prompt; it does not skip fact resolution or acceptance.
-- [ ] Final navigation links use the accepted timetable, not a draft.
 
 ## Route and calendar
 
@@ -34,7 +33,6 @@
 - [ ] One-way fee is confirmed or clearly pending.
 - [ ] Rental opening hours work with the itinerary.
 - [ ] Vehicle, luggage, insurance, mileage, fuel/charge, and winter equipment are addressed.
-- [ ] Each selected navigation link has the same origin, destination, mode, and ordering as its accepted travel block.
 
 ## Attractions and reservations
 
@@ -93,7 +91,6 @@
 ## Final handoff
 
 - [ ] Only selected artifacts are presented as final, and each selected file is clearly named and linked.
-- [ ] Every selected navigation-link leg is present or has a leg-specific explanation of what cannot yet be supplied.
 - [ ] A change-impact search covered summaries, route diagram, days, bookings, stays, food, budget, images, sources, footer, and PDF-only text.
 - [ ] Final facts-to-reconfirm list is concise and actionable.
 - [ ] Assumptions are disclosed.
@@ -113,15 +110,4 @@ These are semantic review checks; the existing HTML/PDF validator does not verif
 - [ ] Research covers the actual planned destinations and experiences without imposing a fixed regional list; weather-dependent experiences have current checks and a fallback.
 - [ ] Weather outside forecast range remains pending with a recheck date; old sunshine photos do not establish a forecast.
 - [ ] Experience confidence is separate from verified operating facts, with source links and check dates retained in the master plan and relevant outputs.
-- [ ] Meal revisions propagate through travel blocks, alternatives, navigation, budgets, HTML and PDF without changing accepted anchors or artifact-selection gates.
-
-## Requested route map and import acceptance
-
-- [ ] Complete trip diagram includes accepted days, modes, repeated stops and optional branches.
-- [ ] Geographic points retain source/CRS/precision; schematic lines are not called roads.
-- [ ] Amap/Baidu files and instructions match current documented or tested capability.
-- [ ] Import generated/schema-checked/target-tested/saved states are reported separately.
-- [ ] Guide is in HTML and PDF; failed launch/import has a usable fallback.
-- [ ] Absolute output links exist; revision agrees across map, import, HTML, PDF and package.
-
-When one whole-trip import is requested, verify one actual provider collection/receiving link, D1–Dn groups preserved after receipt, and per-day dates/stops/order against the accepted plan. Record unverified properties as incomplete; a two-place trial or list of daily links cannot pass this acceptance check.
+- [ ] Meal revisions propagate through travel blocks, alternatives, route descriptions, budgets, HTML and PDF without changing accepted anchors or artifact-selection gates.
