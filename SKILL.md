@@ -278,6 +278,8 @@ Verify that every selected file exists before handoff and provide clickable file
 
 For complete route maps, Amap/Baidu support or import requests, read `references/navigation-and-import.md`. Deliver the full-trip visual, accepted per-day sequence, supported platform files/links, and an import/use guide inside every selected roadbook format. Distinguish schematic connections, road geometry, link handoff, visualization import and account-saved navigation. Verify platform support rather than claiming generic GPX/KML or spreadsheet compatibility. Keep all existing itinerary, health, research and artifact-selection constraints.
 
+For a requested whole-trip, day-grouped import, require one provider-native collection and one receiving/save flow with D1–Dn groups preserved; follow the whole-trip acceptance checks in that reference. A list of leg links or separate daily imports is not equivalent. Respect user-directed phone testing and any prohibition on phone mirroring.
+
 ## Resource map
 
 - `references/navigation-and-import.md`: complete route maps, Amap/Baidu capabilities, import evidence, coordinate semantics, embedded instructions and validation.

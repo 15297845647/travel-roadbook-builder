@@ -27,7 +27,7 @@ Use `scripts/navigation_export.py --plan PLAN.json --output ROUTE.kml` only afte
 
 The example is schema-only, not a usable itinerary. `provider_road_geometry` requires an actual provider route response, preserved request/order and check time. The exporter rejects unknown coordinate systems or absent sources; it does not geocode, calculate roads, create accounts, upload or save routes.
 
-KML/GPX use WGS84. Amap GCJ-02 and Baidu BD-09 cannot be relabeled as WGS84. Record any genuine conversion and its uncertainty. Never fabricate elevation, timestamps, GPS recording history or an estimated road polyline by joining town points. Do not infer road distance from schematic lines. Offer per-day files if a target merges multi-record files or its point limits would lose stops.
+KML/GPX use WGS84. Amap GCJ-02 and Baidu BD-09 cannot be relabeled as WGS84. Record any genuine conversion and its uncertainty. Never fabricate elevation, timestamps, GPS recording history or an estimated road polyline by joining town points. Do not infer road distance from schematic lines. Offer per-day files if a target merges multi-record files or its point limits would lose stops; when a single whole-trip import is required, splitting is a scope change requiring user acceptance.
 
 ## Mobile-only receiving and saving
 
@@ -40,6 +40,18 @@ The copy unexpectedly defaulted to public; inspect **编辑 → 设置权限** a
 Generate genuine shares from actual saved provider routes. Do not synthesize undocumented collection IDs, change opaque share parameters, or label URI endpoint links as saved-route imports. For full itineraries, populate and verify all accepted day/stop groups before calling the map complete; a two-place trial proves only that trial. Preserve rail/flight modes and scenic waypoints; a multi-day collection must not be represented as one continuous driving navigation. Check waypoint order after copy; do not infer that one-click navigation preserves all route choices without inspection.
 
 Baidu must have its own current receiving/save test; success with Amap does not establish Baidu import compatibility. When the user accepts either provider, one verified provider can satisfy platform compatibility, but the requested trip content must still be completed.
+
+## Whole-trip import with day groups
+
+When the user requests one import of the entire trip with days distinguished, the deliverable contract is **one provider-native trip/map collection, one receiving link or QR code, one recipient save/copy flow, with D1–Dn day groups inside**. Derive n and dates from the accepted plan; never hardcode a destination or trip length.
+
+- Preserve each day's date, ordered stops, hotels, meal venues, transport modes and required scenic waypoints. Mark alternatives/optional stops separately so they are not silently inserted into the main route. Retain repeated visits and hotel returns in their correct days rather than globally deduplicating them.
+- Keep day groups inside the imported collection. Day prefixes on a flat list are not proof of native grouping. An HTML landing page containing separate daily import links also does not satisfy one whole-trip import.
+- A trip collection is not one continuous driving route: flights, rail transfers, walking, overnight breaks and optional branches must remain distinguishable. Start driving guidance for the selected day's applicable segment.
+- Verify separately that the target supports the total point count, day groups, whole-collection sharing and preservation of groups/order on receipt. A successful two-place copy test establishes none of those full-trip properties.
+- Before calling delivery complete, compare the saved/imported collection against the accepted plan: day count/dates, per-day stop counts/order, group labels, repeated stops and required waypoints. Confirm the real receiving link targets the full collection, not a trial or one day.
+- If access or platform limits prevent this result, state the exact unmet property and keep the whole-trip import status incomplete. Do not silently substitute many leg links, daily files, a schematic KML, or require desktop login by the recipient. Offer a changed scope only as an explicit tradeoff for the user to accept.
+- Respect the user's chosen test boundary. If they will test on their phone or prohibit mirroring, do not connect to or operate the phone; record their feedback as user-reported evidence, separately from agent verification. Do not change account visibility or publish a collection merely to make a link work without the applicable authorization.
 
 ## Platform capability snapshot — verify again when used
 
@@ -68,7 +80,7 @@ Include the provider/client, capability and test date; exact supplied filenames;
 
 - Link does not launch the app: open in system browser, or copy exact locality/branch into the map search.
 - Point matches wrong branch: verify listing/address; unresolved points remain clearly pending.
-- Waypoint cap: split at a shared node, preserving accepted order and transport mode.
+- Waypoint cap: split navigation segments at a shared node, preserving order and mode; this does not relax a separately requested single-collection import requirement.
 - Automatic optimization changes a scenic route: restore required waypoints; never force travel through a closure.
 - No importer/template/login access: supply the complete local map and staged data with a disclosed limitation; do not call it imported.
 

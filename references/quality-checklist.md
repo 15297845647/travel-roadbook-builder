@@ -123,3 +123,5 @@ These are semantic review checks; the existing HTML/PDF validator does not verif
 - [ ] Import generated/schema-checked/target-tested/saved states are reported separately.
 - [ ] Guide is in HTML and PDF; failed launch/import has a usable fallback.
 - [ ] Absolute output links exist; revision agrees across map, import, HTML, PDF and package.
+
+When one whole-trip import is requested, verify one actual provider collection/receiving link, D1–Dn groups preserved after receipt, and per-day dates/stops/order against the accepted plan. Record unverified properties as incomplete; a two-place trial or list of daily links cannot pass this acceptance check.
