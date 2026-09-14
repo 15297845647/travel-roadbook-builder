@@ -71,3 +71,7 @@ Do not claim that an MCP can purchase a ticket unless its documented, user-appro
 Record branch-level pickup and return details, opening hours, vehicle and luggage fit, one-way fee status, deposit/payment requirements, mileage, fuel or charging, insurance exclusions, second driver, roadside support, tires/chains, tolls, parking, and the final safe return time.
 
 Navigation time is the lower bound. Add paperwork, fuel, meals, viewpoints, congestion, parking search, checkpoints, weather, darkness, altitude, and recovery time.
+
+## Complete maps and importing
+
+When requested, follow `navigation-and-import.md`. The existing route-link helper is a formatter, not an importer or complete map renderer. Supply all-day diagram plus geographic/road detail at the available evidence level, and disclose cross-city name-resolution limitations.

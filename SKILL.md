@@ -62,6 +62,8 @@ Treat the latest message as a change to this ledger, not permission to forget ea
 
 ### 3. Research current facts
 
+For Xiaohongshu, first read `references/xiaohongshu-integration.md`. Use the installed `xhs-login`, `xhs-search`, and `xhs-explore` skills with the actual connected MCP tools. Check service availability and login before searching; installed skill files alone do not establish a working connection.
+
 Browse the internet for all time-sensitive travel facts. For food and travel recommendations, default to combining recent first-hand Xiaohongshu content with authoritative checks. Read `references/xiaohongshu-travel-and-food.md` for capability discovery, searches, evidence grading, and destination-specific research. Prefer sources in this order:
 
 1. official and real-time information: government, attraction/operator, transport, weather, railway, airline, rental-car, hotel, and restaurant sources;
@@ -272,8 +274,14 @@ Verify that every selected file exists before handoff and provide clickable file
 - Never generate final artifacts before material itinerary facts are resolved and the user accepts the plan.
 - Never create final navigation links from a superseded timetable.
 
+## Route maps and platform import
+
+For complete route maps, Amap/Baidu support or import requests, read `references/navigation-and-import.md`. Deliver the full-trip visual, accepted per-day sequence, supported platform files/links, and an import/use guide inside every selected roadbook format. Distinguish schematic connections, road geometry, link handoff, visualization import and account-saved navigation. Verify platform support rather than claiming generic GPX/KML or spreadsheet compatibility. Keep all existing itinerary, health, research and artifact-selection constraints.
+
 ## Resource map
 
+- `references/navigation-and-import.md`: complete route maps, Amap/Baidu capabilities, import evidence, coordinate semantics, embedded instructions and validation.
+- `scripts/navigation_export.py`: validate sourced WGS84 geometry and export explicitly classified KML without calculating roads or uploading.
 - `references/intake-and-research.md`: intake, evidence, route, and transport decisions.
 - `references/xiaohongshu-travel-and-food.md`: default Xiaohongshu search/detail capability routing, food/attraction/driving queries, confidence grading, daily meals, and weather-aware experience research.
 - `references/maps-and-transport.md`: routing capability ladder, navigation-link fallback, exact leg reconciliation, and privacy boundary.

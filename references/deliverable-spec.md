@@ -222,3 +222,7 @@ Use CSS similar to:
 Do not trust the first export. Render and inspect every page.
 
 Derive PDF facts from the same master model or HTML. If a generator contains manually written cover metrics, footer summaries, or day-image mappings, include them in the revision audit and stale-token search.
+
+## Requested map/import module
+
+When the user requests maps or Amap/Baidu imports, include the complete trip diagram, day-level waypoint order, available import artifacts, and platform-specific instructions from `navigation-and-import.md` in every selected HTML/PDF format. Name exact files and distinguish visualization-only import from navigation/account sync. Do not claim unsupported platforms are interchangeable.

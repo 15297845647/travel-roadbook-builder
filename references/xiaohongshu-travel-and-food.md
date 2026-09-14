@@ -4,7 +4,7 @@
 
 ## 1. 能力发现与调用
 
-每次研究先检查当前可用工具与已安装 Skill，不把本文件提到的名称当作已安装能力。
+每次研究先读取 `xiaohongshu-integration.md`，检查当前可用工具与已安装 Skill，不把本文件提到的名称当作服务已连通的证据。已安装的 `xhs-login`、`xhs-search`、`xhs-explore` 按下述流程配合 MCP 使用。
 
 1. 若有 `xhs-search` / `xhs-explore`，先读各自 SKILL.md，再按实际说明执行“关键词搜索 → 候选筛选 → 笔记详情 → 有实质内容的近期评论”。
 2. 若有等价小红书 MCP（如暴露 `search_feeds` / `get_feed_detail`），读取实际工具 schema，按其参数调用。筛选项、枚举、分页与 ID/token 必须来自实际 schema 或搜索返回值，不硬编码猜测。搜索返回的 note/feed ID 与必要访问参数直接交给详情工具，不虚构或拼造链接。

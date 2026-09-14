@@ -106,6 +106,20 @@ flowchart LR
 
 按本次目的地动态生成搜索主题，不预设固定地区。日出、雪山观景等体验结合有效天气预报；超预报范围采用条件性方案与复核节点。具体规则见 [小红书旅行与美食搜索](references/xiaohongshu-travel-and-food.md)。
 
+## 高德手机导入与路线地图
+
+手机接收者无需登录电脑：使用高德实际生成的路线分享链接，在高德内依次点击 **图中提及 → 复制行程 → 保存并预览**。2026-09-14 已在 iPhone 上完成两地点、同一账号的分享与复制保存实测；不同账号和其他版本仍需验证。导入副本可能默认公开，保存后应在“编辑 → 设置权限”检查可见性。
+
+Skill 会区分完整行程图、地点连线示意、真实道路路线、普通导航链接与平台保存的路线。完整行程必须先核对全部日期、地点、交通方式和景观公路途经点；不能把两点测试或普通导航网址称作整趟导入成果。
+
+- 手机导入交付的是平台实际生成的分享链接或二维码，不能自行编造路线 ID。
+- KML 导出脚本只输出有来源的 WGS84 几何，并区分示意连线与道路数据；不自动上传，也不生成高德云端路线。
+- 高德电脑端 KML 展示和表格导入是独立能力，不作为手机导入的替代品。
+- 百度导航链接不等于百度路线导入；未完成对应手机端验证时明确说明。
+- 导入步骤、实际验证范围和失败处理写入用户选定的路书产物。
+
+详见 [路线地图与手机导入](references/navigation-and-import.md)。
+
 ## 目录结构
 
 ```text
@@ -124,6 +138,8 @@ travel-roadbook-builder/
 │   ├── deliverable-spec.md
 │   ├── intake-and-research.md
 │   ├── maps-and-transport.md
+│   ├── navigation-and-import.md
+│   ├── xiaohongshu-integration.md
 │   ├── plan-data-model.md
 │   ├── provenance.md
 │   ├── xiaohongshu-travel-and-food.md
@@ -131,6 +147,8 @@ travel-roadbook-builder/
 │   └── quality-checklist.md
 ├── scripts/
 │   ├── build_route_links.py
+│   ├── navigation_export.py
+│   ├── test_navigation_export.py
 │   ├── embed_html_images.py
 │   └── validate_roadbook.py
 └── tests/

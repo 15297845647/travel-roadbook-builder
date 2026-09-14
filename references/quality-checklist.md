@@ -114,3 +114,12 @@ These are semantic review checks; the existing HTML/PDF validator does not verif
 - [ ] Weather outside forecast range remains pending with a recheck date; old sunshine photos do not establish a forecast.
 - [ ] Experience confidence is separate from verified operating facts, with source links and check dates retained in the master plan and relevant outputs.
 - [ ] Meal revisions propagate through travel blocks, alternatives, navigation, budgets, HTML and PDF without changing accepted anchors or artifact-selection gates.
+
+## Requested route map and import acceptance
+
+- [ ] Complete trip diagram includes accepted days, modes, repeated stops and optional branches.
+- [ ] Geographic points retain source/CRS/precision; schematic lines are not called roads.
+- [ ] Amap/Baidu files and instructions match current documented or tested capability.
+- [ ] Import generated/schema-checked/target-tested/saved states are reported separately.
+- [ ] Guide is in HTML and PDF; failed launch/import has a usable fallback.
+- [ ] Absolute output links exist; revision agrees across map, import, HTML, PDF and package.
